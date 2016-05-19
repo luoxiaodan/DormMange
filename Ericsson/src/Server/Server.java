@@ -39,14 +39,14 @@ public class Server {
 	static public String port;
 	static public int timeGap;
 	static public int maxRequestTimes;
-
+	private int level;
 	static private List<User> users = new ArrayList<User>();
 	static private Server server;
 	String userName;
 	String passWord;
 	String groupId = "";
 	boolean state = false;
-	public static String msgPath = ReadJson.GetConfig("ServerMsgPath", "sets.txt");;
+	public static String msgPath = ReadJson.GetConfig("ServerMsgPath", "sets.txt");
 	public String fileName = new SimpleDateFormat("yyyy_MM_dd").format(Calendar.getInstance().getTime());
 
 	PerformanceManager performanceManager = new PerformanceManager(ReadJson.GetConfig("path", "sets.txt"),
@@ -95,8 +95,8 @@ public class Server {
 		String sameGroupUsers = new String();
 		sameGroupUsers = null;
 		User user;
-		for(int i = 0; i < users.size(); i++)  
-        {  
+		for(int i = 0; i < users.size(); i++)
+        {
 			user = users.get(i);
 			if(user.getGroupId()==id&&user.isLogin())
 				if(sameGroupUsers == null)
@@ -106,7 +106,7 @@ public class Server {
         }
 		return sameGroupUsers;
 	}
-	
+
 	public static Server sharedServer() {
 		if (server == null) {
 			server = new Server();
@@ -183,10 +183,17 @@ public class Server {
 						TextMessage txtMsg = (TextMessage) msg;
 
 						try {
+							String currentTime =  new SimpleDateFormat("yyyy_MM_dd").format(Calendar.getInstance().getTime());
 							if (topicName.equals("Ericsson")) {
-								SaveMsgtoFile.SavetoFile(msgPath, "Server" + fileName + "ReceivedMsgRecord.txt",
-										txtMsg.getText());
-
+								if(level == 1)
+									SaveMsgtoFile.SavetoFile(msgPath, "ServerNormalLog" + fileName + ".txt",
+											"ValidTime:\t"+performanceManager.successTime+"\tInvalidTime:\t"+performanceManager.failTime+"\t"+currentTime);
+								else if (level == 2)
+									SaveMsgtoFile.SavetoFile(msgPath, "ServerDebugLog" + fileName + ".txt",
+										"ValidTime:\t"+performanceManager.successTime+"\tInvalidTime:\t"+performanceManager.failTime+"\t"+txtMsg.getText()+"\t"+currentTime);
+								else
+									SaveMsgtoFile.SavetoFile(msgPath, "ServerLightLog" + fileName + ".txt",
+											currentTime);
 							} else {
 
 								if (topicName.equals("userName")) {
@@ -206,9 +213,9 @@ public class Server {
 									String password = passWord.substring(pos + pos2 + 2, passWord.length());
 
 									int back = login(username, password);
-									
+
 									String temp=null;
-									
+
 									if (200 == back) {
 										groupId = String.valueOf(findUser(username).getGroupId());
 										temp = findSameGroupUser(findUser(username).getGroupId());
@@ -263,6 +270,15 @@ public class Server {
 		}
 	}
 
+	public  void  setLogLevel(String level) {
+		if (level.equals("Normal"))
+			this.level =1;
+		else if (level.equals("Debug"))
+			this.level = 2;
+		else
+			this.level = 0;
+	}
+
 	public static void main(String[] args) throws Exception {
 
 		port = "tcp://localhost:" + ReadJson.GetConfig("port", "sets.txt");
@@ -270,6 +286,7 @@ public class Server {
 		maxRequestTimes = Integer.parseInt(ReadJson.GetConfig("maxRequestTimes", "sets.txt"));
 
 		Server server = Server.sharedServer();
+		sharedServer().setLogLevel(ReadJson.GetConfig("LogLevel", "sets.txt"));
 		Listen userName = server.new Listen("userName");
 		userName.start();
 		Listen password = server.new Listen("passWord");

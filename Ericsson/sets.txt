@@ -1,1 +1,1 @@
-{"port":"61616","timeGap":"1000","maxRequestTimes":"5","path":"E:\\","zipPath":"E:\\","ClientMsgPath":"E:\\","ServerMsgPath":"E:\\","zipSpace":"86400","zipFiled":"604800"}
+{"port":"61616","timeGap":"1000","maxRequestTimes":"5","path":"/Users/Harold_LIU/Desktop/myCode/TempOutput","zipPath":"/Users/Harold_LIU/Desktop/myCode/TempOutput","ClientMsgPath":"/Users/Harold_LIU/Desktop/myCode/TempOutput","ServerMsgPath":"/Users/Harold_LIU/Desktop/myCode/TempOutput","zipSpace":"86400","zipFiled":"604800","LogLevel":"Debug"}

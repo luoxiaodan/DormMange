@@ -92,13 +92,14 @@ public class Client extends JFrame {
 	// 显示同组成员列表组件
 	JList onlineList;
 	DefaultListModel listModel;
-	
+
 	String name;
 	Client.Listen mainListen;
 	// LicenseManager licenseManager = new LicenseManager();
 	// PerformanceManager performanceManager = new
 	// PerformanceManager(path,path,5*1000);
 	PerformanceManager performanceManager = new PerformanceManager(path, path, 60 * 1000);
+
 
 	// PMManager pmManager=new PMManager(path,1);
 	public Client() {
@@ -283,7 +284,7 @@ public class Client extends JFrame {
 		//vec.add("xioaming");
 		listModel.addElement("xiaoming");
 		panel.add(onlineList);
-		
+
 		panel.add(subPanel2);
 		panel.add(subPanel7);
 		panel.add(subPanel8);
@@ -423,6 +424,7 @@ public class Client extends JFrame {
 											receivedCount++;
 											msgDisplay.setText(msgDisplay.getText() + "No." + receivedCount + ":"
 													+ backMessage.substring(1, backMessage.length()) + '\n');
+											System.out.println("Test Liu\t Client" + staticUsername + fileName + "ReceivedMsgRecord.txt"+"\tNo." + receivedCount + ":" + txtMsg.getText());
 											SaveMsgtoFile.SavetoFile(msgPath,
 													"Client" + staticUsername + fileName + "ReceivedMsgRecord.txt",
 													"No." + receivedCount + ":" + txtMsg.getText());
@@ -503,6 +505,8 @@ public class Client extends JFrame {
 		}
 	}
 
+
+
 	public static void main(String[] args) throws Exception {
 
 		// double filesize = Clear.getDirSize(new
@@ -528,9 +532,7 @@ public class Client extends JFrame {
 		client.path = ReadJson.GetConfig("path", "sets.txt");
 		client.performanceManager.setPath(client.path);
 		String zipPath = ReadJson.GetConfig("zipPath", "sets.txt");
-
 		msgPath = ReadJson.GetConfig("ClientMsgPath", "sets.txt");
-
 		client.name = String.valueOf(ClientCount);
 		Listen loginListen = client.new Listen(client.name, true);
 		loginListen.initialize();
