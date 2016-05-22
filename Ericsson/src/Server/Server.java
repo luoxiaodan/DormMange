@@ -186,13 +186,13 @@ public class Server {
 							String currentTime =  new SimpleDateFormat("yyyy_MM_dd").format(Calendar.getInstance().getTime());
 							if (topicName.equals("Ericsson")) {
 								if(level == 1)
-									SaveMsgtoFile.SavetoFile(msgPath, "ServerNormalLog" + fileName + ".txt",
+									SaveMsgtoFile.SavetoFile(msgPath+"\\data\\", "ServerNormalLog" + fileName + ".txt",
 											"ValidTime:\t"+performanceManager.successTime+"\tInvalidTime:\t"+performanceManager.failTime+"\t"+currentTime);
 								else if (level == 2)
-									SaveMsgtoFile.SavetoFile(msgPath, "ServerDebugLog" + fileName + ".txt",
+                                    SaveMsgtoFile.SavetoFile(msgPath+"\\data\\", "ServerDebugLog" + fileName + ".txt",
 										"ValidTime:\t"+performanceManager.successTime+"\tInvalidTime:\t"+performanceManager.failTime+"\t"+txtMsg.getText()+"\t"+currentTime);
 								else
-									SaveMsgtoFile.SavetoFile(msgPath, "ServerLightLog" + fileName + ".txt",
+									SaveMsgtoFile.SavetoFile(msgPath+"\\data\\", "ServerLightLog" + fileName + ".txt",
 											currentTime);
 							} else {
 
@@ -244,9 +244,8 @@ public class Server {
 
 		public void run() {
 			ListenMsg();
-		}
-
-	}
+            performanceManager.zip(msgPath+"\\data\\", "ServerLog" + fileName + ".zip", msgPath);
+        }
 
 	public void sendMsg(String msgText, String toipcName) {
 		try {
