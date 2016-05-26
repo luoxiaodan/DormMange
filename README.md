@@ -1,15 +1,17 @@
-com.stip.dbase
+# SoftwareReuse
 
-Connection getConn()
+### Team Members:
 
-int addPerson(String desitination)
+- 罗晓丹[luoxiaodan](https://github.com/luoxiaodan)
+- 倪雨婷[nytfancy](https://github.com/nytfancy)
+- 王刚 [Gavin96](https://github.com/Gavin96)
+- 叶坤宇[KieranYe](https://github.com/KieranYe)
+- 刘旭东[xdliu002](https://github.com/xdliu002)
 
-String updatePerson(String name,String desitination)
+===
 
-String findPerson(String name)
+### Documents:
 
-<<<<<<< HEAD
-=======
 - [管理文档](https://github.com/Gavin96/SoftwareReuse/blob/master/Document/%E7%AE%A1%E7%90%86%E6%96%87%E6%A1%A3.pdf)
 - [测试文档](https://github.com/Gavin96/SoftwareReuse/blob/master/Document/%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.pdf)
 - [程序文档](https://github.com/Gavin96/SoftwareReuse/blob/master/Document/%E7%A8%8B%E5%BA%8F%E6%96%87%E6%A1%A3.pdf)
@@ -21,34 +23,30 @@ String findPerson(String name)
 - [实践8测试文档](https://github.com/Gavin96/SoftwareReuse/blob/master/Document%2F%E5%AE%9E%E8%B7%B58%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.pdf)
 - [实践9测试文档](https://github.com/Gavin96/SoftwareReuse/blob/master/Document%2F%E5%AE%9E%E8%B7%B59%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.pdf)
 - [ActiveMQ 消息持久化说明](https://github.com/Gavin96/SoftwareReuse/blob/master/%E6%8C%81%E4%B9%85%E5%8C%96%E8%AF%B4%E6%98%8E.md)
->>>>>>> e97d6530682e8fbeea882d2934d870b09e7da4c0
 
-com.stip.face
+===
 
-int detection(String url)
+### 可复用构件(Reuse Component):
 
-void putFace(String url,String name)
+**具体使用方法参见[可复用构件使用说明](https://github.com/Gavin96/SoftwareReuse/blob/master/%E5%A4%8D%E7%94%A8%E6%9E%84%E4%BB%B6/%E5%8F%AF%E5%A4%8D%E7%94%A8%E6%9E%84%E4%BB%B6%E5%8F%8A%E5%85%B6%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)**
 
-String compareFace(String url)
+⚠️构件运行的java版本为:1.8.
 
-Servlet�ӿ�
-
-DbaseServlet
-
-request.getParameter("method"); //the name od Dbase method
-
-method:updatePerson,findPerson
-
-request.getParameter("name"); //people's name
- 
-request.getParameter("destination"); //people's destination
+- [Configuration Management Model](https://github.com/Gavin96/SoftwareReuse/blob/master/%E5%A4%8D%E7%94%A8%E6%9E%84%E4%BB%B6%2FConfigurationManager%2Fsrc%2FConfiguration%2FConfiguration.java)
+读取文件中的系统配置指标，并且提供实时地查询和动态加载功能.**👉[jar包](https://github.com/Gavin96/SoftwareReuse/blob/master/Jar%2FCM%2FConfiguration.jar?raw=true)**,同时需要引入对于JSON数据进行处理的**[jar包](https://github.com/Gavin96/SoftwareReuse/tree/master/Jar/CM/JSON)**
 
 
-<<<<<<< HEAD
-FaceServlet
+- [Performance Management Model](https://github.com/Gavin96/SoftwareReuse/blob/master/%E5%A4%8D%E7%94%A8%E6%9E%84%E4%BB%B6%2FPerformanceManager%2Fsrc%2Fcom%2FHaroldLIU%2FPerformanceManager.java):
+接收系统的性能指标，每分钟自动生成报告并且输出到单独的性能文件(包括报告时间)，**👉[jar包](https://github.com/Gavin96/SoftwareReuse/blob/master/Jar%2FPM%2FPerformanceManager.jar?raw=true)**
 
-request.getPararment("method");//the name of Face method
-=======
+- [License Model](https://github.com/Gavin96/SoftwareReuse/blob/master/%E5%A4%8D%E7%94%A8%E6%9E%84%E4%BB%B6%2FLicenseManager%2Fsrc%2Fcom%2FHaroldLIU%2FLicenseManager.java):
+提供Throughput和Capacity两种检测方式，**👉[jar包](https://github.com/Gavin96/SoftwareReuse/blob/master/Jar%2FLicense%2FLicenseManager.jar?raw=true)**
+
+- [通讯组件](https://github.com/Gavin96/SoftwareReuse/blob/master/%E5%A4%8D%E7%94%A8%E6%9E%84%E4%BB%B6%2FTopic%2Fcom%2FTopicLuo%2FMySubscriber.java)
+在activemq的基础上，对activemq提供的topic模式进行了一定的封装，为实现收发消息的系统提供了更简易的Topic收发订阅组件，**👉[jar包](https://github.com/Gavin96/SoftwareReuse/blob/master/Jar%2FTopic.jar?raw=true)**
+
+===
+
 ### 使用方法(Install)
 > 本项目依赖Activemq框架，因此需要引入activemq的jar包，[下载jar](http://www.apache.org/dyn/closer.cgi?path=/activemq/5.13.2/apache-activemq-5.13.2-bin.zip).
 > 并需要开启JMX监听，具体开启方法如下:
@@ -63,25 +61,11 @@ request.getPararment("method");//the name of Face method
 
 ```xml
 <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="true" dataDirectory="${activemq.data}">
->>>>>>> e97d6530682e8fbeea882d2934d870b09e7da4c0
 
-method:addPerson,comparePerson
+<managementContext>
+     <managementContext createConnector="true"/>
+</managementContext>
 
-<<<<<<< HEAD
-request.getParameter("name"); //people's name
- 
-request.getParameter("destination"); //people's destination
-
-request.getParameter("image");//the url of people's face  
-
-
-ע��
-
-com.stip.face   Face.pathΪ����Ĭ������·������Ҫ�޸�
-
-com.stip.dbase  Dbase���ݿ����������Ҫ�޸�
-
-=======
 ```
 #### Mac OS X User:
  
@@ -112,4 +96,3 @@ $ git clone https://github.com/Gavin96/SoftwareReuse.git
 ====
 
 Copyright 2016 &copy;  Group 3
->>>>>>> e97d6530682e8fbeea882d2934d870b09e7da4c0

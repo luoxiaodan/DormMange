@@ -39,7 +39,7 @@ public class Server {
 	static public String port;
 	static public int timeGap;
 	static public int maxRequestTimes;
-	private int level;
+	public int level;
 	static private List<User> users = new ArrayList<User>();
 	static private Server server;
 	String userName;
@@ -183,18 +183,7 @@ public class Server {
 						TextMessage txtMsg = (TextMessage) msg;
 
 						try {
-							String currentTime =  new SimpleDateFormat("yyyy_MM_dd").format(Calendar.getInstance().getTime());
-							if (topicName.equals("Ericsson")) {
-								if(level == 1)
-									SaveMsgtoFile.SavetoFile(msgPath+"\\data\\", "ServerNormalLog" + fileName + ".txt",
-											"ValidTime:\t"+performanceManager.successTime+"\tInvalidTime:\t"+performanceManager.failTime+"\t"+currentTime);
-								else if (level == 2)
-                                    SaveMsgtoFile.SavetoFile(msgPath+"\\data\\", "ServerDebugLog" + fileName + ".txt",
-										"ValidTime:\t"+performanceManager.successTime+"\tInvalidTime:\t"+performanceManager.failTime+"\t"+txtMsg.getText()+"\t"+currentTime);
-								else
-									SaveMsgtoFile.SavetoFile(msgPath+"\\data\\", "ServerLightLog" + fileName + ".txt",
-											currentTime);
-							} else {
+						
 
 								if (topicName.equals("userName")) {
 									userName = txtMsg.getText();
@@ -225,14 +214,11 @@ public class Server {
 									sendMsg(String.valueOf(back) + groupId + temp, name);
 									state = false;
 								}
-							}
+							
 						} catch (JMSException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						} 
 
 					}
 				});
@@ -244,7 +230,6 @@ public class Server {
 
 		public void run() {
 			ListenMsg();
-            performanceManager.zip(msgPath+"\\data\\", "ServerLog" + fileName + ".zip", msgPath);
         }
 
 	public void sendMsg(String msgText, String toipcName) {
@@ -268,7 +253,7 @@ public class Server {
 			e2.printStackTrace();
 		}
 	}
-
+	}
 	public  void  setLogLevel(String level) {
 		if (level.equals("Normal"))
 			this.level =1;
@@ -290,9 +275,9 @@ public class Server {
 		userName.start();
 		Listen password = server.new Listen("passWord");
 		password.start();
-		Listen receivedMsg = server.new Listen("Ericsson");
-		receivedMsg.start();
-		System.out.println("--------Server Start------");
+	//	Listen receivedMsg = server.new Listen("Ericsson");
+		//receivedMsg.start();
+		System.out.println("--------Server Login Start------");
 	}
 
 }
