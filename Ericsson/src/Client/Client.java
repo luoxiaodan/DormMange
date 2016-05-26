@@ -417,10 +417,11 @@ public class Client extends JFrame {
 						TextMessage txtMsg = (TextMessage) msg;
 						try {
 							String backMessage = txtMsg.getText();
+							System.out.println("test rec"+txtMsg.getText()+"  msg="+  backMessage.substring(0, 1)+" goupid="+groupId);
 							if (!isLogin) {
 								if (status) {
 									if (feedbackDisplay.getText().equals("登陆成功")) {
-										if (backMessage.substring(0, 1).equals(groupId)) {
+										if (backMessage.substring(0, 1).equals(groupId.substring(0, 1))) {
 											receivedCount++;
 											msgDisplay.setText(msgDisplay.getText() + "No." + receivedCount + ":"
 													+ backMessage.substring(1, backMessage.length()) + '\n');

@@ -70,7 +70,7 @@ public class ServerRec {
 						try {
 							
 						  sendMsg(txtMsg.getText(),"ServerMsg");
-							
+					      System.out.println(txtMsg.getText());
 						} catch (JMSException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
