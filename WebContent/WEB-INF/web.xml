@@ -25,6 +25,17 @@
   	<url-pattern>/login</url-pattern>
   </servlet-mapping>
   
+  
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<servlet-class>com.test.Login.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/testlogin</url-pattern>
+  </servlet-mapping>
+  
    <servlet>
   	<servlet-name>blankServlet</servlet-name>
   	<servlet-class>com.lero.web.BlankServlet</servlet-class>
