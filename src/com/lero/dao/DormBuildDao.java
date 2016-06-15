@@ -3,6 +3,7 @@ package com.lero.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,5 +164,16 @@ public class DormBuildDao {
 		pstmt.setString(1, dormBuildId);
 		pstmt.setString(2, dormManagerId);
 		return pstmt.executeUpdate();
+	}
+	
+	public boolean checkName(Connection con,String name) throws SQLException{
+		String sql = "select * from t_dormBuild where dormBuildName=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, name);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()) {
+			return false;
+		}
+		return true;
 	}
 }
