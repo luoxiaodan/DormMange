@@ -17,7 +17,7 @@ import com.lero.util.DbUtil;
 import com.lero.util.PropertiesUtil;
 import com.lero.util.StringUtil;
 
-public class DormManagerServlet extends HttpServlet{
+public class DormManagerServlet {
 
 	/**
 	 * 
@@ -33,6 +33,7 @@ public class DormManagerServlet extends HttpServlet{
 		
 		
 		DormManager dormManager = new DormManager();
+		if(StringUtil.isNotEmpty(action)){
 		if("preSave".equals(action)) {
 			dormManagerPreSave(userName,password,repassword,name,sex,tel);
 			
@@ -40,6 +41,7 @@ public class DormManagerServlet extends HttpServlet{
 			dormManagerSave(userName,password,repassword,name,sex,tel);
 	
 		} 
+		}
 		return DormManager;
 	}
 
@@ -47,14 +49,15 @@ public class DormManagerServlet extends HttpServlet{
 
 	private static void dormManagerSave(String userName,String password,String repassword,String name,String sex,String tel) {
 	
+		if(StringUtil.isNotEmpty(tel)&&StringUtil.isNotEmpty(name)&&StringUtil.isNotEmpty(userName)&&StringUtil.isNotEmpty(password)&&StringUtil.isNotEmpty(repassword)){
 		if(password.equals(repassword)){
-		DormManager dormManager = new DormManager(userName, password, name, sex, tel);
+			DormManager dormManager = new DormManager(userName, password, name, sex, tel);
 		
 		Connection con = null;
 		try {
 			con = dbUtil.getCon();
 			int saveNum = 0;
-			 if(dormManagerDao.haveManagerByUser(con, dormManager.getUserName())){
+			 if(dormManagerServlet_stub.haveManagerByUser(con, dormManager.getUserName())){
 				
 				System.out.println("该用户名已存在");
 					try {
@@ -64,7 +67,7 @@ public class DormManagerServlet extends HttpServlet{
 				}
 				return;
 			} else {
-				saveNum = dormManagerDao.dormManagerAdd(con, dormManager);
+				saveNum = dormManagerServlet_stub.dormManagerAdd(con, dormManager);
 			}
 			if(saveNum > 0) {
 				DormManager=true;
@@ -81,16 +84,19 @@ public class DormManagerServlet extends HttpServlet{
 			}
 		}
 		}
+		}
 	}
 
 	private static void dormManagerPreSave(String userName,String password,String repassword,String name,String sex,String tel){
 		
-		
+		if(StringUtil.isNotEmpty(tel)&&StringUtil.isNotEmpty(name)&&StringUtil.isNotEmpty(userName)&&StringUtil.isNotEmpty(password)&&StringUtil.isNotEmpty(repassword)){
+			if(password.equals(repassword)){
+			
 			Connection con = null;
 			try {
 				con = dbUtil.getCon();
 				DormManager dormManager = new DormManager(userName, password, name, sex, tel);
-				 if(dormManagerDao.haveManagerByUser(con, dormManager.getUserName())){
+				 if(dormManagerServlet_stub.haveManagerByUser(con, dormManager.getUserName())){
 						
 						System.out.println("该用户名已存在");
 							try {
@@ -100,7 +106,7 @@ public class DormManagerServlet extends HttpServlet{
 						}
 						return;
 					} else {
-				int saveNum = dormManagerDao.dormManagerUpdate(con, dormManager);
+				int saveNum = dormManagerServlet_stub.dormManagerUpdate(con, dormManager);
 					}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -112,7 +118,8 @@ public class DormManagerServlet extends HttpServlet{
 				}
 			}
 		} 
-		
+		}
+	}
 	
 
 	
