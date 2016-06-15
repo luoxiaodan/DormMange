@@ -16,8 +16,7 @@ public class loginServlet_UnitTest {
 	private static final long serialVersionUID = 1L;
 	static boolean CASE_SUB=false;
 	public static String CASE_NUM="";
-	static String URL = "http://localhost:8080/DormManage/testlogin/LoginServlet.java";
-   
+ 
 	public static boolean UT_TC_001_001_001_001(){
 		CASE_NUM="UT_TC_001_001_001_001";
 		String postData="userName=&password=111&userType=admin";
