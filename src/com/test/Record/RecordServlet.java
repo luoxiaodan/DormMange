@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.lero.dao.DormBuildDao;
+import com.lero.dao.DormManagerDao;
 import com.lero.dao.RecordDao;
 import com.lero.dao.StudentDao;
 import com.lero.model.DormManager;
@@ -21,35 +22,41 @@ import com.lero.model.Student;
 import com.lero.util.DbUtil;
 import com.lero.util.StringUtil;
 
-public class RecordServlet extends HttpServlet{
+public class RecordServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	DbUtil dbUtil = new DbUtil();
-	RecordDao recordDao = new RecordDao();
-	boolean Record=false;
+	static DbUtil dbUtil = new DbUtil();
+	static RecordDao recordDao = new RecordDao();
+	static boolean Record=false;
 
-	public static boolean Record(String recordId,String studentNumber,String date,String detail,String action) {
+	public static boolean Record(String dormManagerId,String recordId,String studentNumber,String detail,String action) {
 	
 	
-		
+		Calendar rightNow = Calendar.getInstance();       
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");   
+		String date = fmt.format(rightNow.getTime());
 		Record record = new Record();
+		if(StringUtil.isNotEmpty(action)){
 		if("preSave".equals(action)) {
-			recordPreSave(String recordId,String studentNumber,String date,String detail;
+			recordPreSave(dormManagerId,recordId,studentNumber,date,detail);
 		
 		} else if("save".equals(action)){
-			recordSave(String recordId,String studentNumber,String date,String detail);
+			recordSave(dormManagerId,recordId,studentNumber,date,detail);
 			
-		} 
+		} }
+		return Record;
 	}
 
 	
 
-	private void recordSave(String recordId,String studentNumber,String date,String detail) {
+	private static void recordSave(String dormManagerId,String recordId,String studentNumber,String date,String detail) {
 		
+		if(StringUtil.isNotEmpty(dormManagerId)&&StringUtil.isNotEmpty(recordId)&&StringUtil.isNotEmpty(studentNumber)
+				&&StringUtil.isNotEmpty(detail)){
 		Record record = new Record(studentNumber, date, detail); 
 		if(StringUtil.isNotEmpty(recordId)) {
 			if(Integer.parseInt(recordId)!=0) {
@@ -58,10 +65,11 @@ public class RecordServlet extends HttpServlet{
 		}
 		Connection con = null;
 		try {
+		
 			con = dbUtil.getCon();
 			int saveNum = 0;
-			
-			DormManager manager = (DormManager)(session.getAttribute("currentUser"));
+			DormManagerDao dormManagerDao=new DormManagerDao();
+			DormManager manager = dormManagerDao.dormManagerShow(con,dormManagerId);
 			int buildId = manager.getDormBuildId();
 			Student student = StudentDao.getNameById(con, studentNumber, buildId);
 			if(student.getName() == null) {
@@ -70,11 +78,9 @@ public class RecordServlet extends HttpServlet{
 				record.setDormBuildId(student.getDormBuildId());
 				record.setStudentName(student.getName());
 				record.setDormName(student.getDormName());
-				if(StringUtil.isNotEmpty(recordId) && Integer.parseInt(recordId)!=0) {
-					saveNum = recordDao.recordUpdate(con, record);
-				} else {
-					saveNum = recordDao.recordAdd(con, record);
-				}
+				
+					saveNum = recordServlet_stub.recordAdd(con, record);
+				
 				if(saveNum > 0) {
 			Record=true;
 			} else {
@@ -91,18 +97,41 @@ public class RecordServlet extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
+		}
 	}
 
-	private void recordPreSave(String recordId,String studentNumber,String date,String detail) {
-			Connection con = null;
+	private static void recordPreSave(String dormManagerId,String recordId,String studentNumber,String date,String detail) {
+		
+		if(StringUtil.isNotEmpty(dormManagerId)&&StringUtil.isNotEmpty(recordId)&&StringUtil.isNotEmpty(studentNumber)
+				&&StringUtil.isNotEmpty(detail)){
+		Connection con = null;
+			Record record = new Record(studentNumber, date, detail); 
+			if(StringUtil.isNotEmpty(recordId)) {
+				if(Integer.parseInt(recordId)!=0) {
+					record.setRecordId(Integer.parseInt(recordId));
+				}
+			}
 		try {
 			con = dbUtil.getCon();
-			if (StringUtil.isNotEmpty(recordId)) {
-				Record record = recordDao.recordShow(con, recordId);
+			int saveNum = 0;
+			DormManagerDao dormManagerDao=new DormManagerDao();
+			DormManager manager = dormManagerDao.dormManagerShow(con,dormManagerId);
+			int buildId = manager.getDormBuildId();
+			Student student = StudentDao.getNameById(con, studentNumber, buildId);
+			if(student.getName() == null) {
+				System.out.println("学号不在您管理的宿舍楼内");
 			} else {
-				Calendar rightNow = Calendar.getInstance();       
-				SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");   
-				String sysDatetime = fmt.format(rightNow.getTime());
+				record.setDormBuildId(student.getDormBuildId());
+				record.setStudentName(student.getName());
+				record.setDormName(student.getDormName());
+						saveNum = recordServlet_stub.recordUpdate(con, record);
+				
+				if(saveNum > 0) {
+			Record=true;
+			} else {
+					
+					System.out.println("修改失败");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,5 +144,5 @@ public class RecordServlet extends HttpServlet{
 		}
 	}
 	
-	
+	}
 }
