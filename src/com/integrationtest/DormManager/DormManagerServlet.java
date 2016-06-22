@@ -1,27 +1,14 @@
-package com.test.DormManager;
+package com.integrationtest.DormManager;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.lero.dao.DormManagerDao;
 import com.lero.model.DormManager;
-import com.lero.model.PageBean;
 import com.lero.util.DbUtil;
-import com.lero.util.PropertiesUtil;
 import com.lero.util.StringUtil;
+import com.test.DormManager.dormManagerServlet_stub;
 
 public class DormManagerServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	static DbUtil dbUtil = new DbUtil();
@@ -31,7 +18,7 @@ public class DormManagerServlet {
 	
 	public static boolean DormManager(String userName,String password,String repassword,String name,String sex,String tel,String action){
 		
-		
+		DormManager=false;
 		DormManager dormManager = new DormManager();
 		if(StringUtil.isNotEmpty(action)){
 		if("preSave".equals(action)) {
@@ -57,7 +44,7 @@ public class DormManagerServlet {
 		try {
 			con = dbUtil.getCon();
 			int saveNum = 0;
-			 if(dormManagerServlet_stub.haveManagerByUser(con, dormManager.getUserName())){
+			 if(dormManagerDao.haveManagerByUser(con, dormManager.getUserName())){
 				
 				System.out.println("该用户名已存在");
 					try {
@@ -67,7 +54,7 @@ public class DormManagerServlet {
 				}
 				return;
 			} else {
-				saveNum = dormManagerServlet_stub.dormManagerAdd(con, dormManager);
+				saveNum = DormManagerAdd_stub.dormManagerAdd(con, dormManager);
 			}
 			if(saveNum > 0) {
 				DormManager=true;
@@ -96,7 +83,7 @@ public class DormManagerServlet {
 			try {
 				con = dbUtil.getCon();
 				DormManager dormManager = new DormManager(userName, password, name, sex, tel);
-				 if(dormManagerServlet_stub.haveManagerByUser(con, dormManager.getUserName())){
+				 if(dormManagerDao.haveManagerByUser(con, dormManager.getUserName())){
 						
 						System.out.println("该用户名已存在");
 							try {
@@ -106,7 +93,7 @@ public class DormManagerServlet {
 						}
 						return;
 					} else {
-				int saveNum = dormManagerServlet_stub.dormManagerUpdate(con, dormManager);
+				int saveNum = DormManagerUpdate_stub.dormManagerUpdate(con, dormManager);
 				if(saveNum > 0) {
 					DormManager=true;
 				} else {
@@ -125,8 +112,4 @@ public class DormManagerServlet {
 		} 
 		}
 	}
-	
-
-	
-	
 }

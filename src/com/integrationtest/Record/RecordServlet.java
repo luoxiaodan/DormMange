@@ -1,18 +1,9 @@
-package com.test.Record;
+package com.integrationtest.Record;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.lero.dao.DormBuildDao;
 import com.lero.dao.DormManagerDao;
 import com.lero.dao.RecordDao;
 import com.lero.dao.StudentDao;
@@ -21,12 +12,9 @@ import com.lero.model.Record;
 import com.lero.model.Student;
 import com.lero.util.DbUtil;
 import com.lero.util.StringUtil;
+import com.test.Record.recordServlet_stub;
 
 public class RecordServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	static DbUtil dbUtil = new DbUtil();
@@ -35,7 +23,7 @@ public class RecordServlet {
 
 	public static boolean Record(String dormManagerId,String recordId,String studentNumber,String detail,String action) {
 	
-	
+		Record=false;
 		Calendar rightNow = Calendar.getInstance();       
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");   
 		String date = fmt.format(rightNow.getTime());
@@ -79,9 +67,8 @@ public class RecordServlet {
 				record.setStudentName(student.getName());
 				record.setDormName(student.getDormName());
 				
-					saveNum = recordServlet_stub.recordAdd(con, record);
-				//	saveNum = recordDao.recordAdd(con, record);
-					
+					saveNum = RecordAdd_stub.recordAdd(con, record);
+				
 				if(saveNum > 0) {
 			Record=true;
 			} else {
@@ -105,6 +92,7 @@ public class RecordServlet {
 		
 		if(StringUtil.isNotEmpty(dormManagerId)&&StringUtil.isNotEmpty(recordId)&&StringUtil.isNotEmpty(studentNumber)
 				&&StringUtil.isNotEmpty(detail)){
+		//	System.out.println("come in");
 		Connection con = null;
 			Record record = new Record(studentNumber, date, detail); 
 			if(StringUtil.isNotEmpty(recordId)) {
@@ -125,8 +113,7 @@ public class RecordServlet {
 				record.setDormBuildId(student.getDormBuildId());
 				record.setStudentName(student.getName());
 				record.setDormName(student.getDormName());
-				saveNum = recordServlet_stub.recordUpdate(con, record);
-				//saveNum = recordDao.recordUpdate(con, record);
+						saveNum = RecordUpdate_stub.recordUpdate(con, record);
 				
 				if(saveNum > 0) {
 			Record=true;

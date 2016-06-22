@@ -22,20 +22,9 @@ public class loginServlet_stub {
 		   loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_006_001")){
 			
 			STUB_SUC=true;
-		String sql = "select * from t_admin where userName=? and password=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, admin.getUserName());
-		pstmt.setString(2, admin.getPassword());
-		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()) {
-			resultAdmin = new Admin();
-			resultAdmin.setAdminId(rs.getInt("adminId"));
-			resultAdmin.setUserName(rs.getString("userName"));
-			resultAdmin.setPassword(rs.getString("password"));
-			resultAdmin.setName(rs.getString("name"));
-			resultAdmin.setSex(rs.getString("sex"));
-			resultAdmin.setTel(rs.getString("tel"));
-		}
+			if(loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_006_001")){
+				resultAdmin=new Admin("admin","111");
+			}
 		}
 		return resultAdmin;
 		
@@ -50,27 +39,15 @@ public class loginServlet_stub {
 			loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_006_002")){
 					
 			STUB_SUC=true;
-		String sql = "select * from t_dormmanager where userName=? and password=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, dormManager.getUserName());
-		pstmt.setString(2, dormManager.getPassword());
-		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()) {
-			resultDormManager = new DormManager();
-			resultDormManager.setDormManagerId(rs.getInt("dormManId"));
-			resultDormManager.setUserName(rs.getString("userName"));
-			resultDormManager.setPassword(rs.getString("password"));
-			resultDormManager.setDormBuildId(rs.getInt("dormBuildId"));
-			resultDormManager.setName(rs.getString("name"));
-			resultDormManager.setSex(rs.getString("sex"));
-			resultDormManager.setTel(rs.getString("tel"));
-		}
+			if(loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_006_002")){
+				resultDormManager=new DormManager("manager2","555");
+			}
 		}
 		return resultDormManager;
 	
 	}
 	
-	public static Student stutentLogin(Connection con, Student student) throws Exception{
+	public static Student studentLogin(Connection con, Student student) throws Exception{
 		Student resultStudent = null;
 		if(loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_002_003")||
 		   loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_003_005")||
@@ -79,24 +56,9 @@ public class loginServlet_stub {
 		   loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_006_003")){
 					
 			STUB_SUC=true;
-		String sql = "select * from t_student where stuNum=? and password=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, student.getStuNumber());
-		pstmt.setString(2, student.getPassword());
-		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()) {
-			resultStudent = new Student();
-			resultStudent.setStudentId(rs.getInt("studentId"));
-			resultStudent.setStuNumber(rs.getString("stuNum"));
-			resultStudent.setPassword(rs.getString("password"));
-			int dormBuildId = rs.getInt("dormBuildId");
-			resultStudent.setDormBuildId(dormBuildId);
-			resultStudent.setDormBuildName(DormBuildDao.dormBuildName(con, dormBuildId));
-			resultStudent.setDormName(rs.getString("dormName"));
-			resultStudent.setName(rs.getString("name"));
-			resultStudent.setSex(rs.getString("sex"));
-			resultStudent.setTel(rs.getString("tel"));
-		}
+			if(loginServlet_UnitTest.CASE_NUM.equals("UT_TC_001_001_006_003")){
+				resultStudent=new Student("002","123");
+			}
 		}
 		return resultStudent;
 	}

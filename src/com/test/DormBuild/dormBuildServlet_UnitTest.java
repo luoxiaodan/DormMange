@@ -50,7 +50,7 @@ public class dormBuildServlet_UnitTest {
 	}
 	public static boolean UT_TC_001_003_002_001(){
 		CASE_NUM="UT_TC_001_003_002_001";
-		if(! DormBuildServlet.DormBuild("2","2떠","two","preSave")&&dormBuildServlet_stub.STUB_SUC==true){
+		if(! DormBuildServlet.DormBuild("4","2떠","two","preSave")&&dormBuildServlet_stub.STUB_SUC==true){
 			return CASE_SUB=true;
 		}
 		return CASE_SUB;
@@ -64,7 +64,7 @@ public class dormBuildServlet_UnitTest {
 	}
 	public static boolean UT_TC_001_003_004_001(){
 		CASE_NUM="UT_TC_001_003_004_001";
-		if(! DormBuildServlet.DormBuild("2","2떠","","preSave")&&dormBuildServlet_stub.STUB_SUC==true){
+		if(! DormBuildServlet.DormBuild("4","2떠","","preSave")&&dormBuildServlet_stub.STUB_SUC==true){
 			return CASE_SUB=true;
 		}
 		return CASE_SUB;
