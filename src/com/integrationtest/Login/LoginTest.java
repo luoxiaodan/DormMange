@@ -43,7 +43,7 @@ public class LoginTest extends TestCase{
 	}
 	public static boolean IT_TD_001_001_005(){
 		CASE_NUM="IT_TD_001_001_005";
-		if(!LoginServlet.Login("manager2","","admdormManagerin")){
+		if(!LoginServlet.Login("manager2","","dormManager")){
 			return true;
 		}
 		return false;

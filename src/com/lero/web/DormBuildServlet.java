@@ -220,15 +220,13 @@ public class DormBuildServlet extends HttpServlet{
 	private void dormBuildPreSave(HttpServletRequest request,
 			HttpServletResponse response)throws ServletException, IOException {
 		String dormBuildId = request.getParameter("dormBuildId");
-		String dormBuildName = request.getParameter("dormBuildName");
-		String detail = request.getParameter("detail");
-		DormBuild dormBuild = new DormBuild(dormBuildName, detail);
-		dormBuild.setDormBuildId(Integer.parseInt(dormBuildId));
+		
+		
 		if(StringUtil.isNotEmpty(dormBuildId)) {
 			Connection con = null;
 			try {
 				con = dbUtil.getCon();
-				dormBuildDao.dormBuildUpdate(con, dormBuild);
+				DormBuild dormBuild = dormBuildDao.dormBuildShow(con, dormBuildId);
 				request.setAttribute("dormBuild", dormBuild);
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -18,7 +18,7 @@
 			宿舍管理员管理
 		</div>
 		<form name="myForm" class="form-search" method="post" action="dormManager?action=search">
-				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='dormManager?action=preSave'">添加</button>
+				<button id="add"  class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='dormManager?action=preSave'">添加</button>
 				<span class="data_search">
 					<select id="searchType" name="searchType" style="width: 80px;">
 					<option value="name">姓名</option>

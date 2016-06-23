@@ -49,7 +49,7 @@ window.onload = function(){
 			学生管理
 		</div>
 		<form name="myForm" class="form-search" method="post" action="student?action=search" style="padding-bottom: 0px">
-				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='student?action=preSave'">添加</button>
+				<button id="add" class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='student?action=preSave'">添加</button>
 				<span class="data_search">
 					<select id="buildToSelect" name="buildToSelect" style="width: 110px;">
 					<option value="">全部宿舍楼</option>

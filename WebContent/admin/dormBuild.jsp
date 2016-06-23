@@ -17,7 +17,7 @@
 			宿舍楼管理
 		</div>
 		<form name="myForm" class="form-search" method="post" action="dormBuild?action=search">
-				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='dormBuild?action=preSave'">添加</button>
+				<button id="add" name="add" class="btn btn-success"  type="button" style="margin-right: 50px;" onclick="javascript:window.location='dormBuild?action=preSave'">添加</button>
 				<span class="data_search">
 					名称:&nbsp;&nbsp;<input id="s_dormBuildName" name="s_dormBuildName" type="text"  style="width:120px;height: 30px;" class="input-medium search-query" value="${s_dormBuildName }">
 					&nbsp;<button type="submit" class="btn btn-info" onkeydown="if(event.keyCode==13) myForm.submit()">搜索</button>
