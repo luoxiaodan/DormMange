@@ -17,6 +17,7 @@ import com.lero.model.PageBean;
 import com.lero.util.DbUtil;
 import com.lero.util.PropertiesUtil;
 import com.lero.util.StringUtil;
+import com.test.DormBuild.dormBuildServlet_stub;
 
 public class DormBuildServlet extends HttpServlet{
 
@@ -185,6 +186,7 @@ public class DormBuildServlet extends HttpServlet{
 		String dormBuildId = request.getParameter("dormBuildId");
 		String dormBuildName = request.getParameter("dormBuildName");
 		String detail = request.getParameter("detail");
+		
 		DormBuild dormBuild = new DormBuild(dormBuildName, detail);
 		if(StringUtil.isNotEmpty(dormBuildId)) {
 			dormBuild.setDormBuildId(Integer.parseInt(dormBuildId));
@@ -192,6 +194,8 @@ public class DormBuildServlet extends HttpServlet{
 		Connection con = null;
 		try {
 			con = dbUtil.getCon();
+			if(dormBuildDao.checkName(con,dormBuildName)){
+				
 			int saveNum = 0;
 			if(StringUtil.isNotEmpty(dormBuildId)) {
 				saveNum = dormBuildDao.dormBuildUpdate(con, dormBuild);
@@ -206,6 +210,7 @@ public class DormBuildServlet extends HttpServlet{
 				request.setAttribute("mainPage", "dormBuild/dormBuildSave.jsp");
 				request.getRequestDispatcher("mainAdmin.jsp").forward(request, response);
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -215,6 +220,7 @@ public class DormBuildServlet extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 	private void dormBuildPreSave(HttpServletRequest request,
